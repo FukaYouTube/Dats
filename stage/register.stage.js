@@ -15,7 +15,14 @@ const register = new WizardScene('new-user', ctx => {
 }, ctx => {
 
     let message = JSON.parse(fs.readFileSync(`source/messages/msg.${ctx.session.lang || "ru"}.json`))
-    ctx.session.user_name = ctx.message.text
+    
+    ctx.session.user_info = {
+        name: ctx.message.text,
+        surname: undefined,
+        middlename: undefined,
+        birthday: undefined
+    }
+
     ctx.replyWithMarkdown(message["register"]["send_surname"]["message"])
     return ctx.wizard.next()
 
@@ -28,7 +35,7 @@ const register = new WizardScene('new-user', ctx => {
         return ctx.wizard.back()
     }
 
-    ctx.session.user_surname = ctx.message.text
+    ctx.session.user_info.surname = ctx.message.text
     ctx.replyWithMarkdown(message["register"]["send_middlename"]["message"])
     return ctx.wizard.next()
 
@@ -41,7 +48,7 @@ const register = new WizardScene('new-user', ctx => {
         return ctx.wizard.back()
     }
 
-    ctx.session.user_middlename = ctx.message.text
+    ctx.session.user_info.middlename = ctx.message.text
     ctx.replyWithMarkdown(message["register"]["send_birthday"]["message"])
     return ctx.wizard.next()
 
@@ -60,7 +67,7 @@ const register = new WizardScene('new-user', ctx => {
         return ctx.wizard.back()
     }
 
-    ctx.session.user_birthday = ctx.message.text
+    ctx.session.user_info.birthday = ctx.message.text
     ctx.replyWithMarkdown(message["register"]["send_iin"]["message"])
     return ctx.wizard.next()
 
@@ -83,16 +90,22 @@ const register = new WizardScene('new-user', ctx => {
         _id: ctx.from.id,
         username: ctx.from.username,
         first_name: ctx.from.first_name,
-        user_name: ctx.session.user_name,
-        user_surname: ctx.session.user_surname,
-        user_middlename: ctx.session.user_middlename,
-        user_birthday: ctx.session.user_birthday,
+        user_name: ctx.session.user_info.name,
+        user_surname: ctx.session.user_info.surname,
+        user_middlename: ctx.session.user_info.middlename,
+        user_birthday: ctx.session.user_info.birthday,
         user_iin: Number(ctx.message.text),
         by_whom: Number(ctx.session.start_on_refurl) || '',
         ref_url: `https://t.me/MyChestBot?start=${ctx.from.id}`,
     })
     
     user.save()
+
+    let refurl = await User.findById(ctx.session.start_on_refurl)
+    if(refurl) ctx.telegram.sendMessage(refurl._id, message["new-user-on-refurl"][0] + ` ${ctx.session.user_info.name} ${ctx.session.user_info.middlename} ` + message["new-user-on-refurl"][1])
+
+    ctx.session.user_info = null
+    ctx.session.start_on_refurl = null
 
     ctx.replyWithMarkdown(message["register"]["done_register"], keyboard(message["menu"]).oneTime().resize().extra())
     return ctx.scene.leave()
