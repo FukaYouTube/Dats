@@ -1,6 +1,25 @@
 const fs = require('fs')
+const User = require('../model/user.model')
 
 const { keyboard } = require('telegraf/markup')
+
+exports.myurl = ctx => {
+    let message = JSON.parse(fs.readFileSync(`source/messages/msg.${ctx.session.lang || "ru"}.json`))
+    ctx.replyWithMarkdown(message["my-url"] + ` https://t.me/MyChestBot?start=${ctx.from.id}`, keyboard(message["menu"]).oneTime().resize().extra())
+}
+
+exports.mylist = async ctx => {
+    let message = JSON.parse(fs.readFileSync(`source/messages/msg.${ctx.session.lang || "ru"}.json`))
+    let all_user = await User.find({ by_whom: ctx.from.id })
+    
+    let list = message["my-list-in-user"] + '\n\n'
+
+    all_user.map(u => {
+        list += `Имя: ${u.user_name} \nФамилия: ${u.user_surname} \nОтчество: ${u.user_middlename} \n\n`
+    })
+
+    ctx.reply(list, keyboard(message["menu"]).oneTime().resize().extra())
+}
 
 exports.faq = async ctx => {
     let message = JSON.parse(fs.readFileSync(`source/messages/msg.${ctx.session.lang || "ru"}.json`))
