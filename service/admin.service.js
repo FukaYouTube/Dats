@@ -33,7 +33,14 @@ exports.all_user = async ctx => {
     let all_users = `Все пользователи: \n\n`
 
     user.map(async u => {
-        all_users += `ID пользователя: ${u._id} \nНик: ${u.first_name} \nЮзер: @${u.username} \nИмя: ${u.user_name} \nФамилия: ${u.user_surname} \nОтчество: ${u.user_middlename} \nДата регистраций: ${u.date} \n\n`
+        all_users += `ID пользователя: ${u._id} \n` +
+        `Ник: ${u.first_name} \nЮзер: @${u.username} \n` +
+        `Имя: ${u.user_name} \nФамилия: ${u.user_surname} \n` +
+        `Отчество: ${u.user_middlename} \n` + 
+        `Дата регистраций: ${u.date.getDate()}.${
+            (u.date.getMonth() + 1) <= 10 ? '0' + (u.date.getMonth() + 1) :
+            (u.date.getMonth() + 1)}.${u.date.getFullYear()
+        } [${u.date.getHours()}:${u.date.getMinutes()}]` + '\n\n'
     })
 
     ctx.reply(all_users)
@@ -50,12 +57,29 @@ exports.view_user = async ctx => {
     let users = `Пользователь ${'@' + user.username || user.first_name}: \n\n`
     
     if(user){
-        users += `ID пользователя: ${user._id} \nНик: ${user.first_name} \nЮзер: @${user.username} \nИмя: ${user.user_name} \nФамилия: ${user.user_surname} \nОтчество: ${user.user_middlename} \nДата рождения: ${user.user_birthday} (дата/месяц/год или дата-месяц-год) \nИИН: ${user.user_iin} \nРеферальная ссылка: ${user.ref_url} \nОт кого: ${user.by_whom} \n Дата регистраций: ${user.date} \n\nДерево пользователя: \n\n`
+        users += `ID пользователя: ${user._id} \n` +
+        `Ник: ${user.first_name} \nЮзер: @${user.username} \n` +
+        `Имя: ${user.user_name} \nФамилия: ${user.user_surname} \n` +
+        `Отчество: ${user.user_middlename} \nДата рождения: ${user.user_birthday} (дата/месяц/год или дата-месяц-год) \n` +
+        `ИИН: ${user.user_iin} \nРеферальная ссылка: ${user.ref_url} \n` +
+        `От кого: ${user.by_whom} \n` +
+        `Дата регистраций: ${user.date.getDate()}.${
+            (user.date.getMonth() + 1) <= 10 ? '0' + (user.date.getMonth() + 1) :
+            (user.date.getMonth() + 1)}.${user.date.getFullYear()
+        } [${user.date.getHours()}:${user.date.getMinutes()}]` + '\n\n' +
+        `Дерево пользователя: \n\n`
 
         let all_user = await User.find({ by_whom: user._id })
         
         all_user.map(u => {
-            users += `ID: ${u._id} \nНик: ${u.first_name} \nЮзер: @${u.username} \nИмя: ${u.user_name} \nФамилия: ${u.user_surname} \nОтчество: ${u.user_middlename} \nДата регистраций: ${u.date} \n\n`
+            users += `ID пользователя: ${u._id} \n` +
+            `Ник: ${u.first_name} \nЮзер: @${u.username} \n` +
+            `Имя: ${u.user_name} \nФамилия: ${u.user_surname} \n` +
+            `Отчество: ${u.user_middlename} \n` + 
+            `Дата регистраций: ${u.date.getDate()}.${
+                (u.date.getMonth() + 1) <= 10 ? '0' + (u.date.getMonth() + 1) :
+                (u.date.getMonth() + 1)}.${u.date.getFullYear()
+            } [${u.date.getHours()}:${u.date.getMinutes()}]` + '\n\n'
         })
 
         ctx.reply(users)
