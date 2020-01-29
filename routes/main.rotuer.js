@@ -17,24 +17,24 @@ app.hears(/./gm, async (ctx, next) => {
     next()
 })
 
-// Commands
-app.command('myurl', ctx => service.main.cmdMyurl(ctx))
-app.command('mylist', ctx => service.main.cmdMylist(ctx))
-
 // More ...
 app.hears(/./gm, (ctx, next) => {
     let message = JSON.parse(fs.readFileSync(`source/messages/msg.${ctx.session.lang || "ru"}.json`))
 
     switch(ctx.message.text){
-        case message["menu"][0][0]: service.menu.faq(ctx)
+        case message["menu"][0][0]: service.menu.myurl(ctx)
         break
-        case message["menu"][1][0]: service.menu.locations(ctx)
+        case message["menu"][1][0]: service.menu.mylist(ctx)
         break
-        case message["menu"][2][0]: service.menu.about(ctx)
+        case message["menu"][2][0]: service.menu.locations(ctx)
         break
-        case message["menu"][2][1]: service.menu.contacts(ctx)
+        case message["menu"][3][0]: service.menu.faq(ctx)
         break
-        case message["menu"][3][0]: service.menu.settings(ctx)
+        case message["menu"][3][1]: service.menu.about(ctx)
+        break
+        case message["menu"][3][2]: service.menu.contacts(ctx)
+        break
+        case message["menu"][4][0]: service.menu.settings(ctx)
         break
         default: next()
     }
