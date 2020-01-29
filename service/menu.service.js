@@ -15,7 +15,14 @@ exports.mylist = async ctx => {
     let list = message["my-list-in-user"] + '\n\n'
 
     all_user.map(u => {
-        list += `Имя: ${u.user_name} \nФамилия: ${u.user_surname} \nОтчество: ${u.user_middlename} \n\n`
+        list += `${u.username ? `Username: @` + u.username : ``}\n` +
+        message["list-all-user"][0] + ' ' + u.user_name + '\n' +
+        message["list-all-user"][1] + ' ' + u.user_surname + '\n' +
+        message["list-all-user"][2] + ' ' + u.user_middlename + '\n' +
+        message["list-all-user"][3] + ' ' + `${u.date.getDate()}.${
+            (u.date.getMonth() + 1) <= 10 ? '0' + (u.date.getMonth() + 1) :
+            (u.date.getMonth() + 1)}.${u.date.getFullYear()
+        } [${u.date.getHours()}:${u.date.getMinutes()}]` + '\n\n'
     })
 
     ctx.reply(list, keyboard(message["menu"]).oneTime().resize().extra())
