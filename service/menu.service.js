@@ -5,7 +5,7 @@ const { keyboard } = require('telegraf/markup')
 
 exports.myurl = ctx => {
     let message = JSON.parse(fs.readFileSync(`source/messages/msg.${ctx.session.lang || "ru"}.json`))
-    ctx.replyWithMarkdown(message["my-url"] + ` https://t.me/MyChestBot?start=${ctx.from.id}`, keyboard(message["menu"]).oneTime().resize().extra())
+    ctx.replyWithMarkdown(message["my-url"] + ` https://t.me/DatsFinanceBot?start=${ctx.from.id}`, keyboard(message["menu"]).oneTime().resize().extra())
 }
 
 exports.mylist = async ctx => {

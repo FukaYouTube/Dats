@@ -96,7 +96,7 @@ const register = new WizardScene('new-user', ctx => {
         user_birthday: ctx.session.user_info.birthday,
         user_iin: Number(ctx.message.text),
         by_whom: Number(ctx.session.start_on_refurl) || '',
-        ref_url: `https://t.me/MyChestBot?start=${ctx.from.id}`,
+        ref_url: `https://t.me/DatsFinanceBot?start=${ctx.from.id}`,
     })
     
     user.save()
