@@ -40,7 +40,7 @@ exports.all_user = async ctx => {
         `Дата регистраций: ${u.date.getDate()}.${
             (u.date.getMonth() + 1) <= 10 ? '0' + (u.date.getMonth() + 1) :
             (u.date.getMonth() + 1)}.${u.date.getFullYear()
-        } [${u.date.getHours()}:${u.date.getMinutes()}]` + '\n\n'
+        } [${u.date.getHours()}:${u.date.getMinutes()} Coordinated Universal Time (GMT+0000)]` + '\n\n'
     })
 
     ctx.reply(all_users)
@@ -66,7 +66,7 @@ exports.view_user = async ctx => {
         `Дата регистраций: ${user.date.getDate()}.${
             (user.date.getMonth() + 1) <= 10 ? '0' + (user.date.getMonth() + 1) :
             (user.date.getMonth() + 1)}.${user.date.getFullYear()
-        } [${user.date.getHours()}:${user.date.getMinutes()}]` + '\n\n' +
+        } [${user.date.getHours()}:${user.date.getMinutes()} Coordinated Universal Time (GMT+0000)]` + '\n\n' +
         `Дерево пользователя: \n\n`
 
         let all_user = await User.find({ by_whom: user._id })
@@ -79,7 +79,7 @@ exports.view_user = async ctx => {
             `Дата регистраций: ${u.date.getDate()}.${
                 (u.date.getMonth() + 1) <= 10 ? '0' + (u.date.getMonth() + 1) :
                 (u.date.getMonth() + 1)}.${u.date.getFullYear()
-            } [${u.date.getHours()}:${u.date.getMinutes()}]` + '\n\n'
+            } [${u.date.getHours()}:${u.date.getMinutes()} Coordinated Universal Time (GMT+0000)]` + '\n\n'
         })
 
         ctx.reply(users)

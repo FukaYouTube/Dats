@@ -22,7 +22,7 @@ exports.mylist = async ctx => {
         message["list-all-user"][3] + ' ' + `${u.date.getDate()}.${
             (u.date.getMonth() + 1) <= 10 ? '0' + (u.date.getMonth() + 1) :
             (u.date.getMonth() + 1)}.${u.date.getFullYear()
-        } [${u.date.getHours()}:${u.date.getMinutes()}]` + '\n\n'
+        } [${u.date.getHours()}:${u.date.getMinutes()} Coordinated Universal Time (GMT+0000)]` + '\n\n'
     })
 
     ctx.reply(list, keyboard(message["menu"]).oneTime().resize().extra())
