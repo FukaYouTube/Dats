@@ -9,10 +9,10 @@ exports.cmdStart = async ctx => {
 
     let mediaArr = [{
         type: 'photo',
-        media: 'AgACAgIAAxkBAAIWWF5OLqY04TyV66BWriMqvLlkGOrnAAJWrTEbhgdxSlcAATQoHUlAfoV3wQ8ABAEAAwIAA3gAA7OxBAABGAQ'
+        media: 'AgACAgIAAxkBAAIHn15ONb7V7f6HaqVvtTQBJD8C9E9dAAJWrTEbhgdxStAwRT48JU2ghXfBDwAEAQADAgADbQADtbEEAAEYBA'
     }, {
         type: 'photo',
-        media: 'AgACAgIAAxkBAAIWWV5OLqhHfL4wUQABP4lzr8cQY3QaWwACV60xG4YHcUpiYcHfWzdUK0q5e5EuAAMBAAMCAAN4AANXFwACGAQ'
+        media: 'AgACAgIAAxkBAAIHoF5ONb5ADL7CmXrx1cK_OuN6Mp1OAAJXrTEbhgdxSte0agvz0mtGSrl7kS4AAwEAAwIAA20AA1YXAAIYBA'
     }]
 
     let refurl = await User.findById(ctx.startPayload)

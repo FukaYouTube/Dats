@@ -55,10 +55,10 @@ exports.video = ctx => {
     
     let mediaArr = [{
         type: 'video',
-        media: 'BAACAgIAAxkBAAIWQl5OKw1lKOKpKG-vVH_RttDx_mAMAAItBgACx7pwSt1S2AHTsMAbGAQ'
+        media: 'BAACAgIAAxkBAAIHoV5ONgdYtmVeQ1aPyAsEGy7C8aSRAAJhBwAC6pV5Slrm6xk8rFJMGAQ'
     }, {
         type: 'video',
-        media: 'BAACAgIAAxkBAAIWQ15OLJ0mjpb1_zfoLuO7Soy2GN0LAAIIBQAC60hwStQqFATNFcxwGAQ'
+        media: 'BAACAgIAAxkBAAIHol5ONxTOykWpmcPQCvCDom8bdv8YAAKhBgACCbNwSuVkrmvf1E0XGAQ'
     }]
 
     ctx.replyWithMediaGroup(mediaArr)
