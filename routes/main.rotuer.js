@@ -34,7 +34,9 @@ app.hears(/./gm, (ctx, next) => {
         break
         case message["menu"][3][2]: service.menu.contacts(ctx)
         break
-        case message["menu"][4][0]: service.menu.settings(ctx)
+        case message["menu"][4][0]: service.menu.video(ctx)
+        break
+        case message["menu"][5][0]: service.menu.settings(ctx)
         break
         default: next()
     }
