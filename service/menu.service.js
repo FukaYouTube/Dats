@@ -50,6 +50,21 @@ exports.contacts = ctx => {
     ctx.replyWithMarkdown(message["contact"], keyboard(message["menu"]).oneTime().resize().extra())
 }
 
+exports.video = ctx => {
+    let message = JSON.parse(fs.readFileSync(`source/messages/msg.${ctx.session.lang || "ru"}.json`))
+    
+    let mediaArr = [{
+        type: 'video',
+        media: 'BAACAgIAAxkBAAIWQl5OKw1lKOKpKG-vVH_RttDx_mAMAAItBgACx7pwSt1S2AHTsMAbGAQ'
+    }, {
+        type: 'video',
+        media: 'BAACAgIAAxkBAAIWQ15OLJ0mjpb1_zfoLuO7Soy2GN0LAAIIBQAC60hwStQqFATNFcxwGAQ'
+    }]
+
+    ctx.replyWithMediaGroup(mediaArr)
+    ctx.reply('...', keyboard(message["menu"]).oneTime().resize().extra())
+}
+
 exports.settings = ctx => {
     let message = JSON.parse(fs.readFileSync(`source/messages/msg.${ctx.session.lang || "ru"}.json`))
     ctx.replyWithMarkdown(message["settings-message"], keyboard(message["settings-keyboard"]).oneTime().resize().extra())
