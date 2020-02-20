@@ -23,12 +23,16 @@ exports.cmdStart = async ctx => {
     }
 
     if(user){
-        await ctx.replyWithMarkdown(message["welcome"]["old-user"], keyboard(message["menu"]).oneTime().resize().extra())
         ctx.replyWithMediaGroup(mediaArr)
+        setTimeout(() => {
+            ctx.replyWithMarkdown(message["welcome"]["old-user"], keyboard(message["menu"]).oneTime().resize().extra())
+        }, 1000)
     }else{
-        await ctx.replyWithMarkdown(message["welcome"]["new-user"])
         ctx.replyWithMediaGroup(mediaArr)
-        ctx.scene.enter('new-user')
+        setTimeout(() => {
+            ctx.replyWithMarkdown(message["welcome"]["new-user"])
+            ctx.scene.enter('new-user')
+        }, 1000)
     }
 }
 
