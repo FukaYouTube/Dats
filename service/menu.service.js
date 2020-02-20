@@ -50,7 +50,7 @@ exports.contacts = ctx => {
     ctx.replyWithMarkdown(message["contact"], keyboard(message["menu"]).oneTime().resize().extra())
 }
 
-exports.video = ctx => {
+exports.video = async ctx => {
     let message = JSON.parse(fs.readFileSync(`source/messages/msg.${ctx.session.lang || "ru"}.json`))
     
     let mediaArr = [{
@@ -61,7 +61,7 @@ exports.video = ctx => {
         media: 'BAACAgIAAxkBAAIHol5ONxTOykWpmcPQCvCDom8bdv8YAAKhBgACCbNwSuVkrmvf1E0XGAQ'
     }]
 
-    ctx.replyWithMediaGroup(mediaArr)
+    await ctx.replyWithMediaGroup(mediaArr)
     ctx.reply('...', keyboard(message["menu"]).oneTime().resize().extra())
 }
 
