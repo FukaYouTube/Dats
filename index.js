@@ -29,6 +29,8 @@ const app = new Telegraf(process.env.BOT_TOKEN)
 const session = require('telegraf/session')
 const stage = require('./stage')
 
+const service = require('./service')
+
 app.use(session())
 app.use(stage)
 
@@ -37,6 +39,8 @@ const router = require('./routes')
 
 app.use(router.main)
 app.use(router.admin)
+
+app.use(ctx => service.main.sorryCommandNotFound(ctx))
 
 // ###### Run bot
 app.startPolling()

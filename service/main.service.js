@@ -40,3 +40,8 @@ exports.cmdHelp = ctx => {
     let message = JSON.parse(fs.readFileSync(`source/messages/msg.${ctx.session.lang || "ru"}.json`))
     ctx.replyWithMarkdown(message["help"])
 }
+
+exports.sorryCommandNotFound = ctx => {
+    let message = JSON.parse(fs.readFileSync(`source/messages/msg.${ctx.session.lang || "ru"}.json`))
+    ctx.replyWithMarkdown(message["sorryCommandNotFound"], keyboard(message['menu']).oneTime().resize().extra())
+}
