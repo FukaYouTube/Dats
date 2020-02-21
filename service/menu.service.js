@@ -18,7 +18,6 @@ exports.mylist = async ctx => {
         list += `${u.username ? `Username: @` + u.username : ``}\n` +
         message["list-all-user"][0] + ' ' + u.user_name + '\n' +
         message["list-all-user"][1] + ' ' + u.user_surname + '\n' +
-        message["list-all-user"][2] + ' ' + u.user_middlename + '\n' +
         message["list-all-user"][3] + ' ' + `${u.date.getDate()}.${
             (u.date.getMonth() + 1) <= 10 ? '0' + (u.date.getMonth() + 1) :
             (u.date.getMonth() + 1)}.${u.date.getFullYear()

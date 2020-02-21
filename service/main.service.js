@@ -18,7 +18,7 @@ exports.cmdStart = async ctx => {
     let refurl = await User.findById(ctx.startPayload)
     if(refurl && !user){
         ctx.session.start_on_refurl = ctx.startPayload
-        await ctx.replyWithMarkdown(message["welcome"]["new-user-refurl"][0] + ` ${refurl.user_name} ${refurl.user_middlename}. ` + message["welcome"]["new-user-refurl"][1])
+        await ctx.replyWithMarkdown(message["welcome"]["new-user-refurl"][0] + ` ${refurl.user_name} ${refurl.user_surname}. ` + message["welcome"]["new-user-refurl"][1])
         return ctx.scene.enter('new-user')
     }
 

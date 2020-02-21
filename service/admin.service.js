@@ -36,7 +36,6 @@ exports.all_user = async ctx => {
         all_users += `ID пользователя: ${u._id} \n` +
         `Ник: ${u.first_name} \nЮзер: @${u.username} \n` +
         `Имя: ${u.user_name} \nФамилия: ${u.user_surname} \n` +
-        `Отчество: ${u.user_middlename} \n` + 
         `Дата регистраций: ${u.date.getDate()}.${
             (u.date.getMonth() + 1) <= 10 ? '0' + (u.date.getMonth() + 1) :
             (u.date.getMonth() + 1)}.${u.date.getFullYear()
@@ -60,7 +59,7 @@ exports.view_user = async ctx => {
         users += `ID пользователя: ${user._id} \n` +
         `Ник: ${user.first_name} \nЮзер: @${user.username} \n` +
         `Имя: ${user.user_name} \nФамилия: ${user.user_surname} \n` +
-        `Отчество: ${user.user_middlename} \nДата рождения: ${user.user_birthday} (дата/месяц/год или дата-месяц-год) \n` +
+        `Дата рождения: ${user.user_birthday} (дата/месяц/год или дата-месяц-год) \n` +
         `ИИН: ${user.user_iin} \nРеферальная ссылка: ${user.ref_url} \n` +
         `От кого: ${user.by_whom} \n` +
         `Дата регистраций: ${user.date.getDate()}.${
@@ -75,7 +74,6 @@ exports.view_user = async ctx => {
             users += `ID пользователя: ${u._id} \n` +
             `Ник: ${u.first_name} \nЮзер: @${u.username} \n` +
             `Имя: ${u.user_name} \nФамилия: ${u.user_surname} \n` +
-            `Отчество: ${u.user_middlename} \n` + 
             `Дата регистраций: ${u.date.getDate()}.${
                 (u.date.getMonth() + 1) <= 10 ? '0' + (u.date.getMonth() + 1) :
                 (u.date.getMonth() + 1)}.${u.date.getFullYear()
