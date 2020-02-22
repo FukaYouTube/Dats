@@ -16,4 +16,8 @@ app.hears(/view_user\s([^+\"]+)/i, ctx => service.admin.view_user(ctx))
 
 app.hears(/send_message\s([^+\"]+)/i, ctx => service.admin.sendMessageToUser(ctx))
 
+app.hears(/remove_user\s([^+\"]+)/i, ctx => service.admin.removeUserMessage(ctx))
+app.action('not-remove-user', ctx => ctx.deleteMessage())
+app.action('yes-remove-user', ctx => service.admin.removeUser(ctx))
+
 module.exports = app
