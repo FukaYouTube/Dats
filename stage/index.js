@@ -1,6 +1,7 @@
 const Stage = require('telegraf/stage')
 const stage = new Stage()
 
+stage.register(require('./edit.stage'))
 stage.register(require('./register.stage'))
 stage.register(require('./sendMessage.stage'))
 
