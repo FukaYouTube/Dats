@@ -50,18 +50,18 @@ const editor = new WizardScene('edit-data', ctx => {
     switch(Number(ctx.session.editdata.type)){
         case 0:
             await User.findByIdAndUpdate(ctx.from.id, { user_name: ctx.message.text })
-            ctx.reply(message['edit-stage-messages']['question-2']['send_name'].success, keyboard(message["edit-stage-messages"]["question-1"]["menu"]).oneTime().resize().extra())
+            ctx.reply(message['edit-stage-messages']['question-2']['send_name'].success, keyboard(message["menu"]).oneTime().resize().extra())
             ctx.scene.leave()
         break
         case 1:
             await User.findByIdAndUpdate(ctx.from.id, { user_surname: ctx.message.text })
-            ctx.reply(message['edit-stage-messages']['question-2']['send_surname'].success, keyboard(message["edit-stage-messages"]["question-1"]["menu"]).oneTime().resize().extra())
+            ctx.reply(message['edit-stage-messages']['question-2']['send_surname'].success, keyboard(message["menu"]).oneTime().resize().extra())
             ctx.scene.leave()
         break
         case 2:
             if(!service.regex.birthday.test(ctx.message.text)){
                 await ctx.replyWithMarkdown(message["edit-stage-messages"]['question-2']["send_birthday"]["error"])
-                ctx.replyWithMarkdown(message["edit-stage-messages"]["question-1"]["msg"], keyboard(message["menu"]).oneTime().resize().extra())
+                ctx.replyWithMarkdown(message["edit-stage-messages"]["question-1"]["msg"], keyboard(message["edit-stage-messages"]["question-1"]["menu"]).oneTime().resize().extra())
                 return ctx.wizard.back()
             }
 
@@ -72,7 +72,7 @@ const editor = new WizardScene('edit-data', ctx => {
         case 3:
             if(!Number(ctx.message.text)){
                 await ctx.replyWithMarkdown(message["edit-stage-messages"]['question-2']["send_iin"]["error"])
-                ctx.replyWithMarkdown(message["edit-stage-messages"]["question-1"]["msg"], keyboard(message["menu"]).oneTime().resize().extra())
+                ctx.replyWithMarkdown(message["edit-stage-messages"]["question-1"]["msg"], keyboard(message["edit-stage-messages"]["question-1"]["menu"]).oneTime().resize().extra())
                 return ctx.wizard.back()
             }
 
