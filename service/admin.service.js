@@ -18,7 +18,7 @@ exports.admin_help = async ctx => {
     let admin = await Admin.findById(ctx.from.id)
     
     if(admin){
-        ctx.reply('Все команды: \n/all_user \n/admin_help \n/view_user (id user)')
+        ctx.reply('Все команды: \n/all_user - список всех пользователей \n/admin_help - доступные команды \n/view_user (id user) - полный список выбранного пользователя \n/send_message (id user) - отправить сообщение пользователю \n\n!Внимение: где поле (id user) пишите ID пользователя! \nПример: /view_user 123456789')
     }
 }
 
@@ -84,4 +84,15 @@ exports.view_user = async ctx => {
     }else{
         ctx.reply('Пользователь не найден')
     }
+}
+
+exports.sendMessageToUser = async ctx => {
+    let admin = await Admin.findById(ctx.from.id)
+
+    if(!admin){
+        return null
+    }
+
+    ctx.session.whom_to_send = ctx.match[1]
+    ctx.scene.enter('send-message-to-user')
 }
