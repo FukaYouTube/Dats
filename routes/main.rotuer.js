@@ -26,6 +26,8 @@ app.hears(/./gm, (ctx, next) => {
         break
         case message["menu"][1][0]: service.menu.mylist(ctx)
         break
+        case message["menu"][1][1]: service.menu.mydata(ctx)
+        break
         case message["menu"][2][0]: service.menu.locations(ctx)
         break
         case message["menu"][3][0]: service.menu.faq(ctx)
@@ -40,6 +42,11 @@ app.hears(/./gm, (ctx, next) => {
         break
         default: next()
     }
+})
+
+app.use((ctx, next) => {
+    let message = JSON.parse(fs.readFileSync(`source/messages/msg.${ctx.session.lang || "ru"}.json`))
+    ctx.message.text == message["my-list"].menu[0][0] ? ctx.scene.enter('edit-data') : next()
 })
 
 app.hears(/./gm, (ctx, next) => {
