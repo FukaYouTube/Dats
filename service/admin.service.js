@@ -1,3 +1,5 @@
+const { inlineKeyboard, callbackButton } = require('telegraf/markup')
+
 const User = require('../model/user.model')
 const Admin = require('../model/admin.model')
 
@@ -95,4 +97,36 @@ exports.sendMessageToUser = async ctx => {
 
     ctx.session.whom_to_send = ctx.match[1]
     ctx.scene.enter('send-message-to-user')
+}
+
+exports.removeUserMessage = async ctx => {
+    let admin = await Admin.findById(ctx.from.id)
+
+    if(!admin){
+        return null
+    }
+
+    if(!Number(ctx.match[1])){
+        ctx.reply('После команды /remove_user напишите ID пользователя! \nПример: /remove_user 123456789')
+        return null
+    }
+
+    ctx.session.rmuserid = ctx.match[1]
+    ctx.reply('Вы уверены что хотите удлаить данного пользователя?', inlineKeyboard([
+        [callbackButton('Да уверен все на 100%', 'yes-remove-user')],
+        [callbackButton('Не уверен', 'not-remove-user')],
+        [callbackButton('Отмена', 'not-remove-user')]
+    ]).extra())
+}
+
+exports.removeUser = async ctx => {
+    let admin = await Admin.findById(ctx.from.id)
+
+    if(!admin){
+        return null
+    }
+
+    ctx.deleteMessage()
+    await User.remove({ _id: Number(ctx.session.rmuserid) })
+    ctx.reply('Данный пользователь успешно удален!')
 }
