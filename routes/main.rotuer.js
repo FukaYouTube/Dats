@@ -44,7 +44,7 @@ app.hears(/./gm, (ctx, next) => {
     }
 })
 
-app.use((ctx, next) => {
+app.hears(/./gm, (ctx, next) => {
     let message = JSON.parse(fs.readFileSync(`source/messages/msg.${ctx.session.lang || "ru"}.json`))
     ctx.message.text == message["my-list"].menu[0][0] ? ctx.scene.enter('edit-data') : next()
 })
