@@ -14,7 +14,8 @@ const mongoose = require('mongoose')
 
 const optionMongoose = {
     useUnifiedTopology: true,
-    useNewUrlParser: true
+    useNewUrlParser: true,
+    useFindAndModify: false
 }
 
 const connectMongoose = mongoose.connect(process.env.URI_MONGO, optionMongoose)
