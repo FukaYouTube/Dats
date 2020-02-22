@@ -66,7 +66,7 @@ const register = new WizardScene('new-user', ctx => {
         return ctx.wizard.back()
     }
 
-    if(!service.regex.individual_identification_number.test(ctx.message.text)){
+    if(!Number(ctx.message.text)){
         await ctx.replyWithMarkdown(message["register"]["send_iin"]["error"])
         ctx.replyWithMarkdown(message["register"]["send_birthday"]["message"]) // send user birthday
         return ctx.wizard.back()
