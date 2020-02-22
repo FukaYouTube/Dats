@@ -27,6 +27,24 @@ exports.mylist = async ctx => {
     ctx.reply(list, keyboard(message["menu"]).oneTime().resize().extra())
 }
 
+exports.mydata = async ctx => {
+    let user = await User.findById(ctx.from.id)
+    let message = JSON.parse(fs.readFileSync(`source/messages/msg.${ctx.session.lang || "ru"}.json`))
+
+    let messagesend = `${user.username ? `Username: @` + user.username : ``}\n` +
+    message["my-list"]['msg'][0] + ' ' + user.user_name + '\n' +
+    message["my-list"]['msg'][1] + ' ' + user.user_surname + '\n' +
+    message["my-list"]['msg'][2] + ' ' + user.user_birthday + '\n' +
+    message["my-list"]['msg'][3] + ' ' + user.user_iin + '\n' +
+    message["my-list"]['msg'][4] + ' ' + user.ref_url + '\n' +
+    message["my-list"]['msg'][6] + ' ' + `${user.date.getDate()}.${
+        (user.date.getMonth() + 1) <= 10 ? '0' + (user.date.getMonth() + 1) :
+        (user.date.getMonth() + 1)}.${user.date.getFullYear()
+    } [${user.date.getHours()}:${user.date.getMinutes()} Coordinated Universal Time (GMT+0000)]`
+
+    ctx.reply(messagesend, keyboard(message["my-list"].menu).oneTime().resize().extra())
+}
+
 exports.faq = async ctx => {
     let message = JSON.parse(fs.readFileSync(`source/messages/msg.${ctx.session.lang || "ru"}.json`))
     ctx.replyWithMarkdown(message["FAQ"], keyboard(message["menu"]).oneTime().resize().extra())
