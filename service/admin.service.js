@@ -3,6 +3,13 @@ const { inlineKeyboard, callbackButton } = require('telegraf/markup')
 const User = require('../model/user.model')
 const Admin = require('../model/admin.model')
 
+function dateFormat(date){
+    return `${date.getDate()}.${(date.getMonth() + 1) <= 10 ? '0' + (date.getMonth() + 1) : (date.getMonth() + 1)}.${date.getFullYear()} [${date.getHours()}:${date.getMinutes()} Coordinated Universal Time (GMT+0000)]`
+}
+function viewUserFormat(user){
+    return `ID пользователя: ${user._id} \nНик: ${user.first_name} \nЮзер: @${user.username} \nИмя: ${user.user_name} \nФамилия: ${user.user_surname} \nДата регистраций: ${dateFormat(user.date)} \n\n`
+}
+
 exports.active_code = async ctx => {
     if(ctx.session.secret_code == ctx.match[1]){
         let admin = new Admin({
@@ -35,13 +42,7 @@ exports.all_user = async ctx => {
     let all_users = `Все пользователи: \n\n`
 
     user.map(async u => {
-        all_users += `ID пользователя: ${u._id} \n` +
-        `Ник: ${u.first_name} \nЮзер: @${u.username} \n` +
-        `Имя: ${u.user_name} \nФамилия: ${u.user_surname} \n` +
-        `Дата регистраций: ${u.date.getDate()}.${
-            (u.date.getMonth() + 1) <= 10 ? '0' + (u.date.getMonth() + 1) :
-            (u.date.getMonth() + 1)}.${u.date.getFullYear()
-        } [${u.date.getHours()}:${u.date.getMinutes()} Coordinated Universal Time (GMT+0000)]` + '\n\n'
+        all_users += viewUserFormat(u)
     })
 
     ctx.reply(all_users)
@@ -64,22 +65,13 @@ exports.view_user = async ctx => {
         `Дата рождения: ${user.user_birthday} (дата/месяц/год или дата-месяц-год) \n` +
         `ИИН: ${user.user_iin} \nРеферальная ссылка: ${user.ref_url} \n` +
         `От кого: ${user.by_whom} \n` +
-        `Дата регистраций: ${user.date.getDate()}.${
-            (user.date.getMonth() + 1) <= 10 ? '0' + (user.date.getMonth() + 1) :
-            (user.date.getMonth() + 1)}.${user.date.getFullYear()
-        } [${user.date.getHours()}:${user.date.getMinutes()} Coordinated Universal Time (GMT+0000)]` + '\n\n' +
+        `Дата регистраций: ${dateFormat(user.date)}` + '\n\n' +
         `Дерево пользователя: \n\n`
 
         let all_user = await User.find({ by_whom: user._id })
         
         all_user.map(u => {
-            users += `ID пользователя: ${u._id} \n` +
-            `Ник: ${u.first_name} \nЮзер: @${u.username} \n` +
-            `Имя: ${u.user_name} \nФамилия: ${u.user_surname} \n` +
-            `Дата регистраций: ${u.date.getDate()}.${
-                (u.date.getMonth() + 1) <= 10 ? '0' + (u.date.getMonth() + 1) :
-                (u.date.getMonth() + 1)}.${u.date.getFullYear()
-            } [${u.date.getHours()}:${u.date.getMinutes()} Coordinated Universal Time (GMT+0000)]` + '\n\n'
+            users += viewUserFormat(u)
         })
 
         ctx.reply(users)

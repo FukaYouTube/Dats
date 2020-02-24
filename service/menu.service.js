@@ -3,6 +3,10 @@ const User = require('../model/user.model')
 
 const { keyboard } = require('telegraf/markup')
 
+function dateFormat(date){
+    return `${date.getDate()}.${(date.getMonth() + 1) <= 10 ? '0' + (date.getMonth() + 1) : (date.getMonth() + 1)}.${date.getFullYear()} [${date.getHours()}:${date.getMinutes()} Coordinated Universal Time (GMT+0000)]`
+}
+
 exports.myurl = ctx => {
     let message = JSON.parse(fs.readFileSync(`source/messages/msg.${ctx.session.lang || "ru"}.json`))
     ctx.replyWithMarkdown(message["my-url"] + ` https://t.me/DatsFinanceBot?start=${ctx.from.id}`, keyboard(message["menu"]).oneTime().resize().extra())
@@ -18,10 +22,7 @@ exports.mylist = async ctx => {
         list += `${u.username ? `Username: @` + u.username : ``}\n` +
         message["list-all-user"][0] + ' ' + u.user_name + '\n' +
         message["list-all-user"][1] + ' ' + u.user_surname + '\n' +
-        message["list-all-user"][3] + ' ' + `${u.date.getDate()}.${
-            (u.date.getMonth() + 1) <= 10 ? '0' + (u.date.getMonth() + 1) :
-            (u.date.getMonth() + 1)}.${u.date.getFullYear()
-        } [${u.date.getHours()}:${u.date.getMinutes()} Coordinated Universal Time (GMT+0000)]` + '\n\n'
+        message["list-all-user"][3] + ' ' + dateFormat(u.date) + '\n\n'
     })
 
     ctx.reply(list, keyboard(message["menu"]).oneTime().resize().extra())
@@ -37,10 +38,7 @@ exports.mydata = async ctx => {
     message["my-list"]['msg'][2] + ' ' + user.user_birthday + '\n' +
     message["my-list"]['msg'][3] + ' ' + user.user_iin + '\n' +
     message["my-list"]['msg'][4] + ' ' + user.ref_url + '\n' +
-    message["my-list"]['msg'][6] + ' ' + `${user.date.getDate()}.${
-        (user.date.getMonth() + 1) <= 10 ? '0' + (user.date.getMonth() + 1) :
-        (user.date.getMonth() + 1)}.${user.date.getFullYear()
-    } [${user.date.getHours()}:${user.date.getMinutes()} Coordinated Universal Time (GMT+0000)]`
+    message["my-list"]['msg'][6] + ' ' + dateFormat(user.date)
 
     ctx.reply(messagesend, keyboard(message["my-list"].menu).oneTime().resize().extra())
 }
